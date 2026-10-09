@@ -23,12 +23,13 @@ function BookStage() {
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce), (max-width: 680px), (hover: none), (pointer: coarse)");
     if (reduceMotion.matches) return;
     const stage = stageRef.current;
     if (!stage) return;
 
     const handleMove = (event: PointerEvent) => {
+      if (event.pointerType === "touch") return;
       const bounds = stage.getBoundingClientRect();
       const x = (event.clientX - bounds.left) / bounds.width - 0.5;
       const y = (event.clientY - bounds.top) / bounds.height - 0.5;
