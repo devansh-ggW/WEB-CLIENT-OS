@@ -37,7 +37,7 @@ const termsSections = [
   },
   {
     title: "Permitted use and intellectual property",
-    body: "The ebook and its cover artwork are protected works. A buyer may use the purchased copy for personal learning. Unless the seller gives written permission, buyers may not resell, redistribute, publicly post, reproduce, sublicense, or use the ebook to create a competing product. The seller should complete the rights-holder and business details here: [RIGHTS HOLDER DETAILS TO BE COMPLETED].",
+    body: "The ebook and its cover artwork are protected works. A buyer may use the purchased copy for personal learning. Unless the seller gives written permission, buyers may not resell, redistribute, publicly post, reproduce, sublicense, or use the ebook to create a competing product. The seller should complete the rights holder and business details here: [RIGHTS HOLDER DETAILS TO BE COMPLETED].",
   },
   {
     title: "Refunds, cancellations, and payment processing",
@@ -61,7 +61,7 @@ export default function Policy({ kind }: { kind: PolicyKind }) {
           <h1>{isPrivacy ? "Privacy Policy" : "Terms & Conditions"}</h1>
           <p className="legal-lede">
             {isPrivacy
-              ? "A plain English account of how this static storefront uses Paddle.js and handles privacy-related information."
+              ? "A plain English account of how this static storefront uses Paddle.js and handles privacy related information."
               : "The terms for the WEB CLIENT OS digital product and its powered by Paddle checkout."}
           </p>
           <p className="legal-date">Last updated: 9 October 2026 · Review business, delivery, and legal placeholders before launch.</p>
