@@ -19,7 +19,7 @@ export async function beginPaddleCheckout(): Promise<CheckoutResult> {
       message:
         "Paddle is not configured yet. Add these repository Actions variables before purchases can start: " +
         missing.join(" and ") +
-        ". Use a Paddle client-side token, never a Paddle API secret.",
+        ". Use a Paddle Paddle browser token, never a Paddle API secret.",
     };
   }
 
