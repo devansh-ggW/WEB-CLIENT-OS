@@ -29,9 +29,11 @@ declare global {
   }
 }
 
-const clientToken = (import.meta.env.VITE_PADDLE_CLIENT_TOKEN ?? String.fromCharCode(108,105,118,101,95,57,99,99,57,101,98,57,49,53,56,97,97,101,53,51,57,100,99,100,57,51,99,51,98,57,98,52)).trim();
+const configuredClientToken = (import.meta.env.VITE_PADDLE_CLIENT_TOKEN ?? "").trim();
+const clientToken = configuredClientToken || String.fromCharCode(108,105,118,101,95,57,99,99,57,101,98,57,49,53,56,97,97,101,53,51,57,100,99,100,57,51,99,51,98,57,98,52);
 export const PADDLE_CLIENT_TOKEN = clientToken;
-export const PADDLE_PRICE_ID = (import.meta.env.VITE_PADDLE_PRICE_ID ?? "pri_01m4g6cvte7qf2ysrfn0qrpx9w").trim();
+const configuredPriceId = (import.meta.env.VITE_PADDLE_PRICE_ID ?? "").trim();
+export const PADDLE_PRICE_ID = configuredPriceId || "pri_01m4g6cvte7qf2ysrfn0qrpx9w";
 export const PADDLE_PRODUCT_ID = "pro_01m4g6a7wkswmp7vv2cvc3bv6k";
 
 const requestedEnvironment = (import.meta.env.VITE_PADDLE_ENVIRONMENT ?? "").trim().toLowerCase();
