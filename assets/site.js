@@ -43,7 +43,7 @@
     return paddlePromise;
   }
   async function paddleReady() {
-    if (!configured()) throw new Error("Paddle is not configured yet. Add the client-side token and active price ID in assets/site-config.js.");
+    if (!configured()) throw new Error("Paddle is not configured yet. Add the Paddle token and active price ID in assets/site-config.js.");
     const paddle = await loadPaddle();
     if (!initialized) {
       if (String(config.paddleEnvironment || "live").toLowerCase() === "sandbox") paddle.Environment.set("sandbox");
