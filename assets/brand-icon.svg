@@ -1,1 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="WEB CLIENT OS"><rect x="2" y="2" width="60" height="60" rx="13" fill="#201b2b"/><rect x="11" y="12" width="42" height="38" rx="3" fill="none" stroke="#f8f6ff" stroke-width="3.5"/><path d="M12.5 22h39" fill="none" stroke="#f8f6ff" stroke-width="3"/><circle cx="17" cy="17" r="1.7" fill="#a58bff"/><circle cx="22.5" cy="17" r="1.7" fill="#a58bff"/><path d="M18 41l11-11 7 7 10-14" fill="none" stroke="#a58bff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M39 23h7v7" fill="none" stroke="#f8f6ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="WEB CLIENT OS">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#17121f"/><stop offset="1" stop-color="#342049"/></linearGradient>
+  <linearGradient id="signal" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#875cff"/><stop offset="1" stop-color="#e7dcff"/></linearGradient>
+  <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.1"/></filter>
+</defs>
+<rect x="2" y="2" width="60" height="60" rx="14" fill="url(#bg)"/>
+<rect x="2.8" y="2.8" width="58.4" height="58.4" rx="13" fill="none" stroke="#9a7aff" stroke-opacity=".8" stroke-width="1.5"/>
+<rect x="9" y="10" width="46" height="44" rx="6" fill="#251b34" stroke="#e9e0ff" stroke-width="2"/>
+<path d="M15 10h34a6 6 0 0 1 6 6v6H9v-6a6 6 0 0 1 6-6Z" fill="#4c356b"/>
+<circle cx="16" cy="16.5" r="1.6" fill="#f7f2ff"/><circle cx="21.5" cy="16.5" r="1.6" fill="#bb9eff"/><circle cx="27" cy="16.5" r="1.6" fill="#8c63fa"/>
+<path d="M14 44 24 33l7 6 12-13 5 5v15H14Z" fill="#7546d8" opacity=".36"/>
+<path d="M14 42 24 31l7 6 12-13" fill="none" stroke="#a07cff" stroke-opacity=".8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+<path d="M14 42 24 31l7 6 12-13" fill="none" stroke="url(#signal)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M36 24h7v7" fill="none" stroke="#fbf8ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="m40 35 10 9-5 .8-2.2 4.7Z" fill="#f6f0ff" stroke="#261a39" stroke-width="1.7" stroke-linejoin="round"/>
+<path d="m48.5 11.5 1.8 3.3 3.2 1.7-3.2 1.8-1.8 3.2-1.7-3.2-3.3-1.8 3.3-1.7Z" fill="#b59aff"/>
+</svg>
