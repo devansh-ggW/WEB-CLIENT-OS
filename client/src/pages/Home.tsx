@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { SiteChrome } from "@/components/SiteChrome";
 import { beginPaddleCheckout } from "@/lib/checkout";
 import { BASE_PRICE_INR, getLocalizedPrice, type CurrencyState } from "@/lib/currency";
+import { isPaddleConfigured } from "@/lib/paddle";
 
 const COVER_IMAGE = "/book-cover.png";
 
@@ -86,12 +87,10 @@ function PriceBlock({ price }: { price: CurrencyState }) {
     <div className="price-block" aria-live="polite">
       <span className="price-label">ONE-TIME DIGITAL EDITION</span>
       <strong className="price-value">{price.loading ? "Loading…" : price.formatted}</strong>
-      {price.isEstimate ? (
-        <span className="price-note">Estimated local equivalent · Checkout currency may vary</span>
-      ) : price.error ? (
-        <span className="price-note warning">Using the INR price because live conversion was unavailable</span>
+      {price.error ? (
+        <span className="price-note warning">Paddle price preview unavailable · showing the ₹{BASE_PRICE_INR} INR base price</span>
       ) : (
-        <span className="price-note">Base price · ₹{BASE_PRICE_INR} INR</span>
+        <span className="price-note">Localized by Paddle · final amount and taxes confirmed at checkout</span>
       )}
     </div>
   );
@@ -108,6 +107,8 @@ export default function Home() {
     locale: "en-IN",
   });
   const [checkoutMessage, setCheckoutMessage] = useState<string | null>(null);
+  const [checkoutBusy, setCheckoutBusy] = useState(false);
+  const paddleConfigured = isPaddleConfigured();
 
   useEffect(() => {
     let active = true;
@@ -119,7 +120,16 @@ export default function Home() {
     };
   }, []);
 
-  const handleBuy = () => setCheckoutMessage(beginPaddleCheckout().message);
+  const handleBuy = async () => {
+    setCheckoutMessage(null);
+    setCheckoutBusy(true);
+    try {
+      const result = await beginPaddleCheckout();
+      if (!result.ready) setCheckoutMessage(result.message);
+    } finally {
+      setCheckoutBusy(false);
+    }
+  };
 
   return (
     <SiteChrome>
@@ -145,10 +155,10 @@ export default function Home() {
               <p>No agency. No theory. Just the scripts, decisions, and next moves that take you from outreach to a paid website deal.</p>
             </div>
             <div className="hero-actions">
-              <button type="button" className="primary-button" onClick={handleBuy}>
-                Buy the guide <ArrowUpRight size={18} aria-hidden="true" />
+              <button type="button" className="primary-button" onClick={handleBuy} disabled={checkoutBusy}>
+                {checkoutBusy ? "Opening checkout…" : "Buy the guide"} <ArrowUpRight size={18} aria-hidden="true" />
               </button>
-              <span className="action-note">Paddle checkout placeholder · No payment is taken yet</span>
+              <span className="action-note">{paddleConfigured ? "One-time checkout · powered by Paddle" : "Paddle setup required before purchases can start"}</span>
             </div>
           </div>
           <BookStage />
@@ -185,7 +195,7 @@ export default function Home() {
           </div>
           <div className="purchase-cta">
             <PriceBlock price={price} />
-            <button type="button" className="secondary-button" onClick={handleBuy}>Buy now <ArrowUpRight size={17} aria-hidden="true" /></button>
+            <button type="button" className="secondary-button" onClick={handleBuy} disabled={checkoutBusy}>{checkoutBusy ? "Opening checkout…" : "Buy now"} <ArrowUpRight size={17} aria-hidden="true" /></button>
           </div>
         </section>
 
@@ -193,14 +203,14 @@ export default function Home() {
           <div className="notice-panel" role="status">
             <div className="notice-icon"><CircleAlert size={18} aria-hidden="true" /></div>
             <div>
-              <strong>Paddle checkout is not connected yet.</strong>
+              <strong>Checkout could not be opened.</strong>
               <p>{checkoutMessage}</p>
             </div>
             <button type="button" className="notice-close" onClick={() => setCheckoutMessage(null)} aria-label="Dismiss checkout notice">×</button>
           </div>
         ) : null}
 
-        <p className="home-footnote">The price shown outside India is an estimate based on the visitor’s locale and current reference rate. The source price is ₹199 INR.</p>
+        <p className="home-footnote">{paddleConfigured ? "Paddle supplies localized price previews. The final amount and applicable taxes are confirmed in checkout." : "The ₹199 INR base price is shown until Paddle’s client-side token and product price ID are configured."}</p>
       </div>
     </SiteChrome>
   );
