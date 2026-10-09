@@ -55,7 +55,7 @@
   async function refreshPrice() {
     if (!configured()) {
       priceNodes.forEach(node => node.textContent = "₹199");
-      priceHints.forEach(node => node.textContent = "Base price · ₹199 INR. Checkout setup is still required.");
+      priceHints.forEach(node => node.textContent = "Base price ₹199 INR. Add the public Paddle token to enable local pricing and checkout.");
       return;
     }
     try {
