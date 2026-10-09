@@ -2,33 +2,67 @@ import { useEffect, type ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 
 const SITE_NAME = "WEB CLIENT OS";
+const SITE_URL = "https://webclientos.dewify.shop";
+const SHARE_IMAGE = SITE_URL + "/book-cover.png";
 
 const pageMeta: Record<string, { title: string; description: string }> = {
   "/": {
-    title: "WEB CLIENT OS — Turn outreach into website deals",
+    title: "WEB CLIENT OS: The Guide to Landing Website Clients",
     description:
-      "A practical playbook for finding businesses, writing cold emails, making cold calls, and closing your first website deal.",
+      "Learn to find business leads, write cold emails, make calls, and sell websites with the WEB CLIENT OS digital guide.",
   },
   "/privacy": {
-    title: "Privacy Policy — WEB CLIENT OS",
-    description: "How WEB CLIENT OS handles website, currency, support, and future payment data.",
+    title: "Privacy Policy | WEB CLIENT OS",
+    description: "Read how WEB CLIENT OS handles visitor data, Paddle pricing previews, support messages, and checkout privacy.",
   },
   "/terms": {
-    title: "Terms & Conditions — WEB CLIENT OS",
-    description: "Terms for purchasing, accessing, and using the WEB CLIENT OS digital ebook.",
+    title: "Terms and Conditions | WEB CLIENT OS",
+    description: "Review purchase terms, digital delivery, permitted use, refunds, and seller responsibilities for the WEB CLIENT OS guide.",
   },
   "/support": {
-    title: "Support — WEB CLIENT OS",
-    description: "Contact WEB CLIENT OS support by email, phone, or WhatsApp.",
+    title: "Support | WEB CLIENT OS",
+    description: "Get help with the WEB CLIENT OS guide, purchase questions, or access by email, phone, or WhatsApp.",
+  },
+  "/404": {
+    title: "Page not found | WEB CLIENT OS",
+    description: "The page could not be found. Return to the WEB CLIENT OS digital guide to learn how to sell websites to businesses.",
   },
 };
 
+function setMeta(selector: string, attribute: "name" | "property", key: string, value: string) {
+  let meta = document.head.querySelector<HTMLMetaElement>(selector);
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.setAttribute(attribute, key);
+    document.head.appendChild(meta);
+  }
+  meta.setAttribute("content", value);
+}
+
 export function usePageMeta(path: string) {
   useEffect(() => {
-    const meta = pageMeta[path] ?? pageMeta["/"];
+    const meta = pageMeta[path] ?? pageMeta["/404"];
     document.title = meta.title;
-    const description = document.querySelector('meta[name="description"]');
-    description?.setAttribute("content", meta.description);
+    setMeta('meta[name="description"]', "name", "description", meta.description);
+    setMeta('meta[name="robots"]', "name", "robots", "index,follow,max-image-preview:large");
+    setMeta('meta[property="og:type"]', "property", "og:type", path === "/" ? "product" : "website");
+    setMeta('meta[property="og:site_name"]', "property", "og:site_name", SITE_NAME);
+    setMeta('meta[property="og:title"]', "property", "og:title", meta.title);
+    setMeta('meta[property="og:description"]', "property", "og:description", meta.description);
+    setMeta('meta[property="og:url"]', "property", "og:url", SITE_URL + (path === "/" ? "/" : path));
+    setMeta('meta[property="og:image"]', "property", "og:image", SHARE_IMAGE);
+    setMeta('meta[property="og:image:alt"]', "property", "og:image:alt", "The WEB CLIENT OS digital guide cover");
+    setMeta('meta[name="twitter:card"]', "name", "twitter:card", "summary_large_image");
+    setMeta('meta[name="twitter:title"]', "name", "twitter:title", meta.title);
+    setMeta('meta[name="twitter:description"]', "name", "twitter:description", meta.description);
+    setMeta('meta[name="twitter:image"]', "name", "twitter:image", SHARE_IMAGE);
+    let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.rel = "canonical";
+      document.head.appendChild(canonical);
+    }
+    canonical.href = SITE_URL + (path === "/" ? "/" : path);
     document.documentElement.lang = "en";
   }, [path]);
 }
@@ -36,7 +70,7 @@ export function usePageMeta(path: string) {
 export function Wordmark() {
   return (
     <span className="wordmark" aria-label={SITE_NAME}>
-      <span className="wordmark-mark">OS</span>
+      <img className="wordmark-mark" src="/brand-icon.svg" alt="" width={28} height={28} />
       <span className="wordmark-copy">
         <span>WEB CLIENT</span>
         <span>FIELD GUIDE</span>
