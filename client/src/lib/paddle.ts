@@ -31,7 +31,8 @@ declare global {
 
 const clientToken = (import.meta.env.VITE_PADDLE_CLIENT_TOKEN ?? "").trim();
 export const PADDLE_CLIENT_TOKEN = clientToken;
-export const PADDLE_PRICE_ID = (import.meta.env.VITE_PADDLE_PRICE_ID ?? "").trim();
+export const PADDLE_PRICE_ID = (import.meta.env.VITE_PADDLE_PRICE_ID ?? "pri_01m4g6cvte7qf2ysrfn0qrpx9w").trim();
+export const PADDLE_PRODUCT_ID = "pro_01m4g6a7wkswmp7vv2cvc3bv6k";
 
 const requestedEnvironment = (import.meta.env.VITE_PADDLE_ENVIRONMENT ?? "").trim().toLowerCase();
 export const PADDLE_ENVIRONMENT: "sandbox" | "live" =
