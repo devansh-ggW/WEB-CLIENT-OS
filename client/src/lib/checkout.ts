@@ -1,16 +1,43 @@
-export type CheckoutResult = {
-  ready: false;
-  message: string;
-};
+import {
+  getPaddle,
+  isPaddleConfigured,
+  PADDLE_PRICE_ID,
+} from "@/lib/paddle";
 
-/**
- * Paddle is intentionally not configured yet. This boundary makes the future
- * integration explicit without pretending that payment or delivery exists.
- */
-export function beginPaddleCheckout(): CheckoutResult {
-  return {
-    ready: false,
-    message:
-      "Paddle Checkout is not connected yet. No payment was started. Before launch, add the Paddle product/price, seller account, server-side verification, webhook handling, and protected ebook delivery.",
-  };
+export type CheckoutResult =
+  | { ready: true }
+  | { ready: false; message: string };
+
+export async function beginPaddleCheckout(): Promise<CheckoutResult> {
+  if (!isPaddleConfigured()) {
+    const missing: string[] = [];
+    if (!import.meta.env.VITE_PADDLE_CLIENT_TOKEN) missing.push("VITE_PADDLE_CLIENT_TOKEN");
+    if (!PADDLE_PRICE_ID) missing.push("VITE_PADDLE_PRICE_ID");
+
+    return {
+      ready: false,
+      message:
+        "Paddle is not configured yet. Add these repository Actions variables before purchases can start: " +
+        missing.join(" and ") +
+        ". Use a Paddle client-side token, never a Paddle API secret.",
+    };
+  }
+
+  try {
+    const paddle = await getPaddle();
+    paddle.Checkout.open({
+      items: [{ priceId: PADDLE_PRICE_ID, quantity: 1 }],
+      settings: {
+        displayMode: "overlay",
+        theme: "light",
+      },
+    });
+    return { ready: true };
+  } catch {
+    return {
+      ready: false,
+      message:
+        "Paddle checkout could not open. Check that the token and price ID belong to the same Paddle environment, the price is active, and the checkout domain is approved in Paddle.",
+    };
+  }
 }
