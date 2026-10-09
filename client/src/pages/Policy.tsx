@@ -6,7 +6,7 @@ type PolicyKind = "privacy" | "terms";
 const privacySections = [
   {
     title: "What this site does",
-    body: "WEB CLIENT OS is a storefront for a digital ebook. The current site presents the book, displays an INR base price, calculates an estimated local equivalent when possible, and provides support links. Paddle Checkout is intentionally not connected yet, so this version does not collect payment details or grant ebook access.",
+    body: "WEB CLIENT OS is a static storefront for a digital ebook. It uses Paddle.js, when configured, to preview localized pricing and open Paddle Checkout. This website does not run its own server, database, customer account system, or payment form. Payment details are entered into Paddle’s checkout, and Paddle processes them under its own terms and privacy notice.",
   },
   {
     title: "Information you may provide",
@@ -14,11 +14,11 @@ const privacySections = [
   },
   {
     title: "Currency detection and storage",
-    body: "The page reads the browser language and region to choose a likely display currency. For visitors outside India, it requests a reference rate from Frankfurter and labels the result as an estimate. A short-lived sessionStorage entry may cache the rate for up to 30 minutes. If detection or the rate request fails, the page falls back to ₹199 INR. The displayed estimate is not a payment authorization or proof of purchase.",
+    body: "When configured, the page requests a localized price preview from Paddle.js for the WEB CLIENT OS price ID. Paddle can use visitor location to determine the likely local currency and returns the formatted price. If Paddle is unavailable or the product price is not configured, the page falls back to the ₹199 INR base price. The preview is informational; the currency, applicable taxes, and final amount are confirmed in Paddle Checkout.",
   },
   {
     title: "Cookies, analytics, and third parties",
-    body: "This implementation does not add advertising cookies or an analytics SDK. It uses browser session storage for the currency cache and loads the supplied cover from the site’s storage path. Frankfurter receives a rate request without payment or account data. When Paddle is connected, its checkout, cookies, payment processing, and privacy terms must be added to this notice before launch. Any future analytics provider must also be named here before it is enabled.",
+    body: "This implementation does not add an advertising or analytics SDK. When configured, it loads Paddle.js to preview prices and launch checkout. Paddle may process device, browser, transaction, and location information as part of these services and may use cookies or similar technologies. Review Paddle’s privacy notice at https://www.paddle.com/legal/privacy. This static website does not receive or store card details. Any future analytics provider must be named here before it is enabled.",
   },
   {
     title: "Retention, security, and rights",
@@ -29,11 +29,11 @@ const privacySections = [
 const termsSections = [
   {
     title: "Product and purchase",
-    body: "WEB CLIENT OS is a digital ebook intended to teach beginners how to find businesses, write cold outreach, make calls, handle objections, and sell websites. The source price is ₹199 INR; converted values shown on the site are estimates. Paddle Checkout is not connected in this version, so no purchase can be completed from this placeholder and no access is granted by clicking Buy Now.",
+    body: "WEB CLIENT OS is a digital ebook intended to teach beginners how to find businesses, write cold outreach, make calls, handle objections, and sell websites. The base price is ₹199 INR. When localized pricing is enabled in Paddle, the storefront and Paddle Checkout may show a local-currency price, and Paddle Checkout confirms the amount and any applicable taxes before payment. A purchase is complete only when Paddle confirms it.",
   },
   {
     title: "Delivery and access",
-    body: "Before launch, the seller must publish a real Paddle product and define a protected delivery method for the ebook PDF. Access should be granted only after verified provider events, not from a browser redirect or a client-side success message. Delivery timing, access recovery, and support response terms should be completed here before sales begin: [DELIVERY / ACCESS DETAILS TO BE COMPLETED].",
+    body: "Before launch, the seller must publish an active Paddle product and configure how buyers receive the ebook. This static frontend does not verify transactions with a server or protect a private PDF file. A public download URL can be shared, so do not treat it as protected paid access. Configure an appropriate delivery process and complete delivery timing, access recovery, and support response terms here before sales begin: [DELIVERY / ACCESS DETAILS TO BE COMPLETED].",
   },
   {
     title: "Permitted use and intellectual property",
@@ -41,7 +41,7 @@ const termsSections = [
   },
   {
     title: "Refunds, cancellations, and payment processing",
-    body: "No refund promise is made by this placeholder page. The seller must choose and publish a lawful refund and cancellation policy that matches Paddle’s terms and applicable consumer rules before launch: [REFUND POLICY TO BE COMPLETED]. Paddle, not this frontend, would process payment details. The seller must verify provider events and handle duplicate or failed events safely.",
+    body: "The seller must publish a clear refund and cancellation policy that matches Paddle’s terms and applicable consumer rules before launch: [REFUND POLICY TO BE COMPLETED]. Paddle processes payment details through its checkout. Because this site has no backend or webhook receiver, it does not independently verify transactions or maintain order records.",
   },
   {
     title: "Liability and applicable law",
@@ -61,10 +61,10 @@ export default function Policy({ kind }: { kind: PolicyKind }) {
           <h1>{isPrivacy ? "Privacy Policy" : "Terms & Conditions"}</h1>
           <p className="legal-lede">
             {isPrivacy
-              ? "A plain-English account of what this storefront does today, what it does not do yet, and what must be completed before Paddle Checkout goes live."
-              : "The practical terms for a future digital purchase, written without inventing business details that have not been supplied."}
+              ? "A plain-English account of how this static storefront uses Paddle.js and handles privacy-related information."
+              : "The terms for the WEB CLIENT OS digital product and its Paddle-powered checkout."}
           </p>
-          <p className="legal-date">Last updated: 9 October 2026 · Review placeholders before launch.</p>
+          <p className="legal-date">Last updated: 9 October 2026 · Review business, delivery, and legal placeholders before launch.</p>
         </div>
         <div className="legal-body">
           {sections.map((section, index) => (
