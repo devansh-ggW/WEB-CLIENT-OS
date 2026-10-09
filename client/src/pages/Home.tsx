@@ -85,7 +85,7 @@ function BookStage() {
 function PriceBlock({ price }: { price: CurrencyState }) {
   return (
     <div className="price-block" aria-live="polite">
-      <span className="price-label">ONE-TIME DIGITAL EDITION</span>
+      <span className="price-label">SINGLE PURCHASE DIGITAL EDITION</span>
       <strong className="price-value">{price.loading ? "Loading…" : price.formatted}</strong>
       {price.error ? (
         <span className="price-note warning">Paddle price preview unavailable · showing the ₹{BASE_PRICE_INR} INR base price</span>
@@ -120,6 +120,25 @@ export default function Home() {
     };
   }, []);
 
+  useEffect(() => {
+    const schemaScript = document.createElement("script");
+    schemaScript.id = "web-client-os-product-schema";
+    schemaScript.type = "application/ld+json";
+    schemaScript.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Product",
+      name: "WEB CLIENT OS Digital Guide",
+      description: "A practical digital guide to finding business leads, writing cold emails, making calls, and selling websites.",
+      image: "https://webclientos.dewify.shop/book-cover.png",
+      productID: "pro_01m4g6a7wkswmp7vv2cvc3bv6k",
+      sku: "pro_01m4g6a7wkswmp7vv2cvc3bv6k",
+      brand: { "@type": "Brand", name: "WEB CLIENT OS" },
+      offers: { "@type": "Offer", price: "199", priceCurrency: "INR", url: "https://webclientos.dewify.shop/" }
+    });
+    document.head.appendChild(schemaScript);
+    return () => schemaScript.remove();
+  }, []);
+
   const handleBuy = async () => {
     setCheckoutMessage(null);
     setCheckoutBusy(true);
@@ -148,7 +167,7 @@ export default function Home() {
               <em>It needs people who can sell them.</em>
             </h1>
             <p className="hero-intro">
-              WEB CLIENT OS is the step-by-step playbook for landing your first cold call or cold email and selling websites to real businesses — even if you’re starting from zero.
+              WEB CLIENT OS is the step by step playbook for landing your first cold call or cold email and selling websites to real businesses, even if you’re starting from zero.
             </p>
             <div className="hero-detail">
               <span className="detail-line" aria-hidden="true" />
@@ -158,7 +177,7 @@ export default function Home() {
               <button type="button" className="primary-button" onClick={handleBuy} disabled={checkoutBusy}>
                 {checkoutBusy ? "Opening checkout…" : "Buy the guide"} <ArrowUpRight size={18} aria-hidden="true" />
               </button>
-              <span className="action-note">{paddleConfigured ? "One-time checkout · powered by Paddle" : "Paddle setup required before purchases can start"}</span>
+              <span className="action-note">{paddleConfigured ? "Single purchase · powered by Paddle" : "Paddle setup required before purchases can start"}</span>
             </div>
           </div>
           <BookStage />
@@ -210,7 +229,7 @@ export default function Home() {
           </div>
         ) : null}
 
-        <p className="home-footnote">{paddleConfigured ? "Paddle supplies localized price previews. The final amount and applicable taxes are confirmed in checkout." : "The ₹199 INR base price is shown until Paddle’s client-side token and product price ID are configured."}</p>
+        <p className="home-footnote">{paddleConfigured ? "Paddle supplies localized price previews. The final amount and applicable taxes are confirmed in checkout." : "The base price of ₹199 INR appears until the Paddle token and price ID are configured."}</p>
       </div>
     </SiteChrome>
   );
