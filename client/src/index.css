@@ -36,7 +36,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(109, 59, 232, 0.
 .site-header-inner { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .brand-link { display: inline-flex; align-items: center; }
 .wordmark { display: inline-flex; align-items: center; gap: 11px; letter-spacing: 0.18em; }
-.wordmark-mark { display: grid; place-items: center; width: 28px; height: 28px; color: var(--white); background: var(--violet); font-size: 9px; font-weight: 800; letter-spacing: 0.03em; }
+.wordmark-mark { display: block; width: 28px; height: 28px; flex: 0 0 28px; object-fit: contain; background: none; }
 .wordmark-copy { display: flex; flex-direction: column; gap: 2px; color: var(--ink); font-size: 10px; font-weight: 800; line-height: 1; }
 .wordmark-copy span:last-child { color: var(--violet); font-size: 8px; letter-spacing: 0.24em; }
 .site-nav, .footer-nav { display: flex; align-items: center; gap: 25px; }
