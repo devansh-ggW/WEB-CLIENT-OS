@@ -26,6 +26,22 @@
     toast.setAttribute("aria-hidden", "true");
   });
 
+  const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
+  const mobileMenu = document.querySelector("[data-mobile-menu]");
+  if (mobileMenuToggle && mobileMenu) {
+    mobileMenuToggle.addEventListener("click", () => {
+      const open = mobileMenuToggle.getAttribute("aria-expanded") !== "true";
+      mobileMenuToggle.setAttribute("aria-expanded", String(open));
+      mobileMenuToggle.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
+      mobileMenu.classList.toggle("is-open", open);
+    });
+    mobileMenu.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
+      mobileMenu.classList.remove("is-open");
+      mobileMenuToggle.setAttribute("aria-expanded", "false");
+      mobileMenuToggle.setAttribute("aria-label", "Open navigation");
+    }));
+  }
+
   function configured() {
     return Boolean(String(config.paddleClientToken || "").trim() && String(config.paddlePriceId || "").trim());
   }
