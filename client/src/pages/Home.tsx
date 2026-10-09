@@ -9,11 +9,11 @@ import { isPaddleConfigured } from "@/lib/paddle";
 const COVER_IMAGE = "/book-cover.png";
 
 const outcomes = [
-  { index: "01", title: "Find real businesses", copy: "Spot owners who need a better website now — not someday." },
+  { index: "01", title: "Find real businesses", copy: "Spot owners who need a better website now, not someday." },
   { index: "02", title: "Write cold emails", copy: "Use practical scripts that earn replies instead of silence." },
   { index: "03", title: "Make confident calls", copy: "Know what to say, how to open, and how to keep the conversation moving." },
   { index: "04", title: "Handle objections", copy: "Turn “it’s expensive” and “we already have a website” into next steps." },
-  { index: "05", title: "Close & get paid", copy: "Present, negotiate, deliver — and keep the client long term." },
+  { index: "05", title: "Close & get paid", copy: "Present, negotiate, deliver, and keep the client long term." },
 ];
 
 function BookStage() {
@@ -189,7 +189,7 @@ export default function Home() {
               <p className="eyebrow">Inside the playbook</p>
               <h2 id="outcomes-title">Skills that turn into clients.</h2>
             </div>
-            <p className="section-aside">A field-tested path for beginners who want practical momentum, not another course to finish.</p>
+            <p className="section-aside">A field tested path for beginners who want practical momentum, not another course to finish.</p>
           </div>
           <div className="outcomes-list">
             {outcomes.map((outcome) => (
