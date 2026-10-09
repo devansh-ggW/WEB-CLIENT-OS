@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 
 const SITE_NAME = "WEB CLIENT OS";
@@ -81,7 +81,12 @@ export function Wordmark() {
 
 export function SiteChrome({ children }: { children: ReactNode }) {
   const [location] = useLocation();
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   usePageMeta(location);
+
+  useEffect(() => {
+    setMobileNavOpen(false);
+  }, [location]);
 
   return (
     <div className="site-shell">
@@ -90,17 +95,29 @@ export function SiteChrome({ children }: { children: ReactNode }) {
           <Link href="/" className="brand-link" aria-label="WEB CLIENT OS home">
             <Wordmark />
           </Link>
-          <nav className="site-nav" aria-label="Primary navigation">
-            <Link href="/" className={location === "/" ? "nav-link active" : "nav-link"}>
+          <button
+            type="button"
+            className="mobile-menu-toggle"
+            aria-label={mobileNavOpen ? "Close navigation" : "Open navigation"}
+            aria-expanded={mobileNavOpen}
+            aria-controls="primary-navigation"
+            onClick={() => setMobileNavOpen((open) => !open)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+          <nav id="primary-navigation" className={mobileNavOpen ? "site-nav mobile-nav-open" : "site-nav"} aria-label="Primary navigation">
+            <Link href="/" onClick={() => setMobileNavOpen(false)} className={location === "/" ? "nav-link active" : "nav-link"}>
               Home
             </Link>
-            <Link href="/privacy" className={location === "/privacy" ? "nav-link active" : "nav-link"}>
+            <Link href="/privacy" onClick={() => setMobileNavOpen(false)} className={location === "/privacy" ? "nav-link active" : "nav-link"}>
               Privacy
             </Link>
-            <Link href="/terms" className={location === "/terms" ? "nav-link active" : "nav-link"}>
+            <Link href="/terms" onClick={() => setMobileNavOpen(false)} className={location === "/terms" ? "nav-link active" : "nav-link"}>
               Terms
             </Link>
-            <Link href="/support" className={location === "/support" ? "nav-link active" : "nav-link"}>
+            <Link href="/support" onClick={() => setMobileNavOpen(false)} className={location === "/support" ? "nav-link active" : "nav-link"}>
               Support
             </Link>
           </nav>
