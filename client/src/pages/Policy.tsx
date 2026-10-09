@@ -10,7 +10,7 @@ const privacySections = [
   },
   {
     title: "Information you may provide",
-    body: "The site does not currently require account creation or a contact form. If you contact support by email, phone, or WhatsApp, the information you choose to share is handled by the relevant service and by the support operator. Before launch, the business owner should add the legal controller name, business address, and a support-data retention period here: [BUSINESS / CONTROLLER DETAILS TO BE COMPLETED].",
+    body: "The site does not currently require account creation or a contact form. If you contact support by email, phone, or WhatsApp, the information you choose to share is handled by the relevant service and by the support operator. Before launch, the business owner should add the legal controller name, business address, and a support data retention period here: [BUSINESS / CONTROLLER DETAILS TO BE COMPLETED].",
   },
   {
     title: "Currency detection and storage",
@@ -29,7 +29,7 @@ const privacySections = [
 const termsSections = [
   {
     title: "Product and purchase",
-    body: "WEB CLIENT OS is a digital ebook intended to teach beginners how to find businesses, write cold outreach, make calls, handle objections, and sell websites. The base price is ₹199 INR. When localized pricing is enabled in Paddle, the storefront and Paddle Checkout may show a local-currency price, and Paddle Checkout confirms the amount and any applicable taxes before payment. A purchase is complete only when Paddle confirms it.",
+    body: "WEB CLIENT OS is a digital ebook intended to teach beginners how to find businesses, write cold outreach, make calls, handle objections, and sell websites. The base price is ₹199 INR. When localized pricing is enabled in Paddle, the storefront and Paddle Checkout may show a local currency price, and Paddle Checkout confirms the amount and any applicable taxes before payment. A purchase is complete only when Paddle confirms it.",
   },
   {
     title: "Delivery and access",
